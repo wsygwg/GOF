@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GOF.iml" filepath="$PROJECT_DIR$/GOF.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android_studio_workspace-GOF.iml" filepath="$PROJECT_DIR$/android_studio_workspace-GOF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/goflib/goflib.iml" filepath="$PROJECT_DIR$/goflib/goflib.iml" />
     </modules>
