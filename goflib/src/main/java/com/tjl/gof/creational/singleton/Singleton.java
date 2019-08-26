@@ -1,27 +1,21 @@
 package com.tjl.gof.creational.singleton;
 
 public class Singleton {
-	
-	private static Singleton singleton;
-	private static long createdTime;
-	
-	private Singleton(){
-		
-	}
-	
-	public static Singleton getInstance(){
-		if(singleton == null){
-			synchronized (Singleton.class) {
-				if(singleton == null){
-					singleton = new Singleton();
-					createdTime = System.currentTimeMillis();
-				}
-			}
-		}
-		return singleton;
-	}
+    private static Singleton instance;
 
-	public static void showCreateTime(){
-		System.out.println("Singleton create time = " + createdTime);
-	}
+    /* 私有构造方法，防止被实例化 */
+    private Singleton() {
+    }
+
+    /* 获取实例 */
+    public static Singleton getInstance() {
+        if(instance == null){
+            synchronized (Singleton.class){
+                if(instance == null){
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
 }
