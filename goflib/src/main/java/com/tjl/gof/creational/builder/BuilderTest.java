@@ -1,62 +1,65 @@
 package com.tjl.gof.creational.builder;
 
-public class BuilderTest {
-    class Product {
-        private String name;
-        private String type;
+import com.tjl.gof.PatternTest;
+import com.tjl.gof.utils.TPrinter;
 
-        public void showProduct() {
-            System.out.println("名称：" + name);
-            System.out.println("型号：" + type);
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-    }
-
-    abstract class Builder {
-        public abstract void setPart(String arg1, String arg2);
-
-        public abstract Product getProduct();
-    }
-
-    class ConcreteBuilder extends Builder {
-        private Product product = new Product();
-
-        public Product getProduct() {
-            return product;
-        }
-
-        public void setPart(String arg1, String arg2) {
-            product.setName(arg1);
-            product.setType(arg2);
-        }
-    }
-
-    public class Director {
-        private Builder builder = new ConcreteBuilder();
-
-        public Product getAProduct() {
-            builder.setPart("宝马汽车", "X7");
-            return builder.getProduct();
-        }
-
-        public Product getBProduct() {
-            builder.setPart("奥迪汽车", "Q5");
-            return builder.getProduct();
-        }
-    }
-
-    public void main(String[] args) {
+public class BuilderTest implements PatternTest {
+    @Override
+    public void patternTestLogic() {
         Director director = new Director();
-        Product product1 = director.getAProduct();
-        product1.showProduct();
-        Product product2 = director.getBProduct();
-        product2.showProduct();
+        Product p = director.construct();
+    }
+
+    /**
+     * 利用Director来创建有先后顺序的产品
+     */
+    class Director{
+        private Builder builder;
+        public Product construct(){
+            builder = new ConcreteBuilder();
+            builder.buildPart1();
+            builder.buildPart2();
+            Product p = builder.retrieveResult();
+            return p;
+        }
+    }
+
+    /**
+     * 重装系统
+     */
+    class Product{
+        boolean isSystemFormated = false;
+        public void formatSystem(){
+            isSystemFormated = true;
+        }
+        public void installationSystem(){
+            if(!isSystemFormated){
+                TPrinter.p("请先进行系统格式化再安装新系统！");
+            }
+        }
+    }
+
+    interface Builder{
+        void buildPart1();
+        void buildPart2();
+        Product retrieveResult();
+    }
+
+    class ConcreteBuilder implements Builder{
+        private Product p = new Product();
+        @Override
+        public void buildPart1() {
+            p.formatSystem();
+        }
+
+        @Override
+        public void buildPart2() {
+            p.installationSystem();
+        }
+
+        @Override
+        public Product retrieveResult() {
+            return p;
+        }
     }
 }
